@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../models');
+const { Tag, Product, ProductTag, Category } = require('../../models');
 
 // The `/api/tags` endpoint
 
@@ -9,6 +9,12 @@ router.get('/', (req, res) => {
       'id',
       'tag_name'
     ],
+    include: [
+      {
+        Model: Product,
+        attributes: ['category_id']
+      }
+    ]
   })
   .then(dbTagData => res.json(dbTagData))
   .catch(err => {
@@ -21,16 +27,22 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   Tag.findOne({
+    where: {
+      id: req.params.id
+    },
     attributes: [
       'id',
       'tag_name'
     ],
-    where: {
-      id: req.params.id
-    },
     include: [
-      {},
-      {},
+      {
+        model: Product,
+        attributes: ['product_id']
+      },
+      {
+        model: Category,
+        attributes: ['category_id]']
+      },
     ]
   })
   .then(dbTagData => {
@@ -62,9 +74,16 @@ router.post('/', (req, res) => {
 
   // update a tag's name by its `id` value
 router.put('/:id', (req, res) => {
-  Tag.update(req.body, {
-    hooks?
-  })
+  Tag.update(
+    {
+      title: req.body.tag_name
+    },
+    {
+      where: {
+        id: req.params.id
+      }
+    }
+  )
   .then(dbTagData => {
     if (!dbTagData[0]) {
       res.status(404).json({ message: 'No tag with this id.'})
