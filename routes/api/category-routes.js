@@ -6,25 +6,25 @@ const { Category, Product, Tag } = require('../../models');
 
 // find all categories
 router.get('/', (req, res) => {
-  Category.fineAll({
+  Category.findAll({
     attributes: [
       'category_name',
       'id'
     ],
-    include: [
-      {
-        model: Product,
-        attributes: [
-          'prouct_id'
-        ]
-      },
-      {
-        model: Tag,
-        attributes: [
-          'tag_id'
-        ]
-      }
-    ]
+    // include: [
+    //   {
+    //     model: Product,
+    //     attributes: [
+    //       'prouct_id'
+    //     ]
+    //   },
+    //   {
+    //     model: Tag,
+    //     attributes: [
+    //       'tag_id'
+    //     ]
+    //   }
+    // ]
   })
   .then(dbCategoryData => res.json(dbCategoryData))
   .catch(err => {
