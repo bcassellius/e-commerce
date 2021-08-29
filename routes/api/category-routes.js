@@ -7,31 +7,14 @@ const { Category, Product, Tag } = require('../../models');
 // find all categories
 router.get('/', (req, res) => {
   Category.findAll({
-    attributes: [
-      'category_name',
-      'id'
-    ],
-    // include: [
-    //   {
-    //     model: Product,
-    //     attributes: [
-    //       'prouct_id'
-    //     ]
-    //   },
-    //   {
-    //     model: Tag,
-    //     attributes: [
-    //       'tag_id'
-    //     ]
-    //   }
-    // ]
+    // be sure to include its associated Products
+    include: [{model: Product}],
   })
   .then(dbCategoryData => res.json(dbCategoryData))
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
   });
-  // be sure to include its associated Products
 });
 
 
@@ -41,10 +24,8 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    attributes: [
-      'category_name',
-      'id'
-    ]
+    // be sure to include its associated Products
+    include: [{model: Product}]
   })
   .then(dbCategoryData => {
     if (!dbCategoryData) {
@@ -57,7 +38,6 @@ router.get('/:id', (req, res) => {
     console.log(err);
     res.status(500).json(err);
   });
-  // be sure to include its associated Products
 });
 
 
@@ -67,7 +47,13 @@ router.post('/', (req, res) => {
     category_name: req.body.category_name,
     id: req.body.id
   })
-  .then(dbCategoryData)
+  .then(dbCategoryData => {
+    if (!dbCategoryData) {
+        res.status(404).json({ message: 'No category found with this id' });
+        return;
+    }
+    res.json(dbCategoryData);
+  })
   .catch(err => {
     console.console.log(err);
     res.status(500).json(err);
@@ -86,7 +72,7 @@ router.put('/:id', (req, res) => {
     }
   })
   .then(dbCategoryData => {
-    if (!dbUserData[0]) {
+    if (!dbCategoryData[0]) {
       res.status(404).json({ message: 'No category found by that id.'})
       return;
     }
