@@ -21,7 +21,7 @@ This app was created using Express, MySQL2, Sequelize, and dotenv. To work with 
 
 <a name='usage'></a>
 ## Usage
-This application can be used by an e-commerce site in order to compete with other e-commerce companies. To run the app, you must start the local server by entering 'npm start' into your terminal. You can use Insomnia to interact with the app or MySQL also works. The username and password and name for the database are kept in an environmental variable file to keep it more secure. For more information about the functionality of the app, watch this walkthrough video.
+This application can be used by an e-commerce site in order to compete with other e-commerce companies. To run the app, you must start the local server by entering 'npm start' into your terminal. You can use Insomnia to interact with the app or MySQL also works. The username and password and name for the database are kept in an environmental variable file to keep it more secure. For more information about the functionality of the app, watch this walkthrough video https://www.awesomescreenshot.com/video/5024113?key=ca951e3de7b06e75d4b655b2690c2486.
 
 <a name='license'></a>
 ## License
