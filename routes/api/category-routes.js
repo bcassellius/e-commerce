@@ -64,7 +64,6 @@ router.post('/', (req, res) => {
 
 // update a category by its `id` value
 router.put('/:id', (req, res) => {
-  // expects {category_name: 'belts'}
   Category.update(req.body, {
     individualHooks: true,
     where: {
